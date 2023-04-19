@@ -1,3 +1,7 @@
+/*
+ Reutilice el código del programa correspondiente al ejercicio 2.1.2 y modifíquelo para que calcule una bonificación de 10% al total de la compra si ésta es mayor o igual a $5000 y si la forma de pago es en efectivo. Utilice una sola expresión lógica. Modificar el ticket para que incluya la forma de pago en el detalle. Será necesario ingresar la forma de pago. Las formas de pago disponibles son (c-tarjeta de crédito / d-tarjeta de débito / e-efectivo).
+ *Nota: prestar atención al ingreso de datos de tipo char.
+*/
 #include <stdio.h>
 
 int cantidad;

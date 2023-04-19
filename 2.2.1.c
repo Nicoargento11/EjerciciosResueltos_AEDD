@@ -1,3 +1,5 @@
+/*  Para otorgar un préstamo, un banco evalúa el sueldo del solicitante. Si el sueldo es mayor o igual a $100000, se autoriza un préstamo de hasta $300000. Para sueldos inferiores, sólo se autoriza un préstamo de hasta el 75% de sus ingresos. Codifique en C un programa que permita ingresar el monto del sueldo del solicitante y muestre en pantalla una leyenda indicando el monto de préstamo autorizado.*/
+
 #include <stdio.h>
 
 /*Declaracion de variables globales*/

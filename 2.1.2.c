@@ -1,3 +1,15 @@
+/*
+ Reutilice el código del programa correspondiente al ejercicio 2.1.1 y modifíquelo para que el ticket incluya la bonificación en el detalle.
+
+ Ejemplos:
+
+ Cant. unidades: 7 - Precio unit.: $ 1000
+ Total: $ 7000.00
+ Bonificación: $ 1050.00
+ Total a pagar: $ 5950.00
+ ¡Gracias por su compra!
+
+*/
 #include <stdio.h>
 
 int cantidad;

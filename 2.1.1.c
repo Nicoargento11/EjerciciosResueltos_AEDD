@@ -1,3 +1,6 @@
+/*
+ Reutilice el código del programa correspondiente al ejercicio 1.a) y modifíquelo para que calcule una bonificación de 15% al total de la compra si ésta es mayor o igual a $5000 o se com pran más de 10 productos. Utilice una sola expresión lógica.
+*/
 #include <stdio.h>
 
 int cantidad;

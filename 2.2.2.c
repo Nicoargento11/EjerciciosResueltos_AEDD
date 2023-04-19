@@ -1,3 +1,5 @@
+/* Con el objeto de conseguir fondos para su viaje de egresados, los alumnos de 6to. año organizaron un baile. El precio de las entradas es de $750 con una consumición, y de $500 sin consumición. Si la venta es anticipada, se realiza un descuento del 20% al valor de la entrada. Escriba un algoritmo que solicite por teclado el tipo de entrada (1-con consumición, 2-sin consumición) y un carácter que indique si la venta fue anticipada (‘S’) o no (‘N’) y muestre por pantalla el tipo de entrada y el importe a pagar. */
+
 #include <stdio.h>
 // Declaración de variables Globales
 int tipoEntrada;
