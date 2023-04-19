@@ -1,0 +1,5 @@
+# Ignorar archivos .exe
+*.exe
+
+# Ignorar arhivos .json
+*.json
