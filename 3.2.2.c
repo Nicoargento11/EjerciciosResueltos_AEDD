@@ -7,7 +7,7 @@ float precioUnitario;
 float totalAcumulado = 0;
 
 void ingresarDatos();
-float devolverTicket();
+void devolverTicket();
 void gastoActualizado();
 
 int main()
@@ -40,7 +40,7 @@ void ingresarDatos()
     }
 }
 
-float devolverTicket()
+void devolverTicket()
 {
     printf("\n******************************** \n");
     printf("TOTAL A PAGAR: $%.2f \n", totalAcumulado);
