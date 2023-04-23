@@ -1,6 +1,6 @@
 #include <stdio.h>
 int num;
-int tablaMultiplicar(int);
+void tablaMultiplicar(int);
 int main()
 {
     printf("Ingresa la tabla que desea ver: ");
@@ -9,7 +9,7 @@ int main()
     return 0;
 }
 
-int tablaMultiplicar(int numero)
+void tablaMultiplicar(int numero)
 {
     int resultado;
     printf("----------------- \n");
