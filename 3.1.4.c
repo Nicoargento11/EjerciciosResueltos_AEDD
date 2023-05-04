@@ -7,6 +7,7 @@ int cantNotas = 10;
 // Función principal
 int main()
 {
+
     float nota;
     int count;
     float totalNotas;

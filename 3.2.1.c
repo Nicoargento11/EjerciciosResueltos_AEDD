@@ -4,6 +4,7 @@
 char nombreProducto[30];
 int cantidadProducto;
 float precioUnitario;
+float totalAcumulado = 0;
 
 void ingresarDatos();
 void devolverTicket();
@@ -29,17 +30,18 @@ void ingresarDatos()
         printf("Ingresa el precio unitario del producto: %s \n", nombreProducto);
         scanf("%f", &precioUnitario);
         fflush(stdin);
+        totalAcumulado += (float)cantidadProducto * precioUnitario;
         printf("¿Desea seguir agregando mas productos? \n");
         printf("SI- ingrese un numero positivo \nNO- ingrese -1 \n");
         scanf("%d", &cajero);
+        fflush(stdin);
     }
 }
 
 void devolverTicket()
 {
-    float resultado = (float)cantidadProducto * precioUnitario;
     printf("\n******************************** \n");
-    printf("TOTAL A PAGAR: $%.2f \n", resultado);
+    printf("TOTAL A PAGAR: $%.2f \n", totalAcumulado);
     printf("******************************** \n");
     printf("¡Gracias por su compra!");
 }
