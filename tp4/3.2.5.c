@@ -48,22 +48,52 @@ int main()
 void pedirDatos()
 {
     printf("Ingrese su numero de documento: ");
-    scanf("%d", &documento);
+    if (scanf("%d", &documento) != 1)
+    {
+        printf("Error: debe ingresar un número entero.\n");
+        fflush(stdin);
+        return;
+    }
     fflush(stdin);
+
     printf("\nIngrese su edad: ");
-    scanf("%d", &edad);
+    if (scanf("%d", &edad) != 1 || edad < 0)
+    {
+        printf("Error: debe ingresar un número entero positivo.\n");
+        fflush(stdin);
+        return;
+    }
     fflush(stdin);
+
     printf("\nIngrese su sexo (M/F): ");
-    scanf("%c", &sexo);
+    if (scanf(" %c", &sexo) != 1 || (sexo != 'M' && sexo != 'F'))
+    {
+        printf("Error: debe ingresar 'M' o 'F'.\n");
+        fflush(stdin);
+        return;
+    }
     fflush(stdin);
+
     printf("\nIngrese su categoria");
     printf("\nN-Niños, C-Cadetes ");
-    scanf("%c", &categoria);
+    if (scanf(" %c", &categoria) != 1 || (categoria != 'N' && categoria != 'C'))
+    {
+        printf("Error: debe ingresar 'N' o 'C'.\n");
+        fflush(stdin);
+        return;
+    }
     fflush(stdin);
+
     printf("\nIngrese su provincia de origen: ");
     printf("\n1-Chaco, 2- Formosa, 3-Corrientes \n ");
-    scanf("%d", &origen);
+    if (scanf("%d", &origen) != 1 || (origen != 1 && origen != 2 && origen != 3))
+    {
+        printf("Error: debe ingresar un número entre 1 y 3.\n");
+        fflush(stdin);
+        return;
+    }
     fflush(stdin);
+
     if (sexo == 'M' && (edad >= 10 && edad <= 12) && origen == 2)
     {
         varonesFormosa++;
