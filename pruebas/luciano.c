@@ -1,105 +1,82 @@
-/* 2.1.Generar una matriz de Ventas de 6 filas por 12 columnas ingresando por teclado el importe vendido en
-cada una de las sucursales (filas) en cada mes (columna) del año 2019. Se desea conocer el máximo monto
-de venta y a qué sucursal corresponde. Informar los resultados pedidos.
-
-2.2.Modifique el programa del punto anterior para generar un vector cuyos elementos sean la suma de ventas
-mensuales de cada sucursal, a fin de obtener la venta anual. Mostrar en pantalla los datos de la matriz y
-el vector de resultados. */
-
+/*Almacene en una matriz ingresando por teclado, la información de los importes correspondientes
+a cada tipo de gasto (1-Alimentos 2-Salud 3-Movilidad 4-Edudación) en el primer semestre del
+año (desde enero hasta junio inclusive).
+o Cada fila representa un tipo de gasto realizado y cada columna representa cada mes del
+semestre
+- Recorra la matriz para generar un vector que registre el total acumulado del semestre por tipo de
+gastos. Es decir, cada posición del vector representará un tipo de gasto y almacenará la suma de
+los gastos realizados en el semestre.
+- Incluya una función para visualizar los datos ingresados en la matriz, así como los valores
+almacenados en el vector.
+*/
 #include <stdio.h>
+#include <string.h>
+#define MESES 3
+#define TIPO 4
 
-//--definidas por el usuario--//
+// Matriz
+int matriz[3][4];
 
-typedef float m_importe;
+// Array
+int v_total[4];
 
-//--variables--//
+// Variable Glogal
+int var_total = 0;
 
-m_importe ventas[6][12];
-m_importe ventasAnuales[6];
-
-int i, j;
-float mayorValor;
-int sucursal, mes;
-float sumatoria;
-
-//--funciones--//
-
-void ingresarDatos()
-{
-
-    for (i = 0; i < 6; i++)
-    {
-
-        for (j = 0; j < 12; j++)
-        {
-            printf("ingrese el monto en sucursal %d, mes %d\n", i + 1, j + 1);
-            scanf("%f", &ventas[i][j]);
-            fflush(stdin);
-        }
-    }
-}
-
-void buscarMayor()
-{
-
-    mayorValor = 0;
-
-    for (i = 0; i < 6; i++)
-    {
-
-        for (j = 0; j < 12; j++)
-        {
-
-            if (ventas[i][j] > mayorValor)
-            {
-                mayorValor = ventas[i][j];
-                sucursal = i;
-                mes = j;
-            }
-        }
-    }
-}
-
-void mostrarDatos()
-{
-    printf("------------------------------------------------------------------\n");
-    printf("El mayor monto fue %.2f\n", mayorValor);
-    printf("sucursal %d, mes %d\n", i, j);
-    printf("------------------------------------------------------------------\n");
-}
-
-void calcularVentasAnuales()
-{
-
-    sumatoria = 0;
-
-    for (i = 0; i < 6; i++)
-    {
-
-        for (j = 0; j < 12; j++)
-        {
-
-            sumatoria += ventas[i][j];
-        }
-        ventasAnuales[i] = sumatoria;
-    }
-
-    for (i = 0; i < 6; i++)
-    {
-
-        printf("las sumas mensuales de la sucursal %d fueron %.2f\n", i + 1, ventasAnuales[i]);
-    }
-}
-
-//--algoritmo princiopal--//
+// Prototipos de Funciones
+void ingresarDatos();
+void calcularTotalTipo();
+void calcularGastoTotal();
+void imprimirResultados();
 
 int main()
 {
-
     ingresarDatos();
-    buscarMayor();
-    mostrarDatos();
-    calcularVentasAnuales();
-
+    calcularTotalTipo();
+    calcularGastoTotal();
+    imprimirResultados();
     return 0;
+}
+
+// Funciones
+void ingresarDatos()
+{
+    for (int i = 0; i < TIPO; i++)
+    {
+        for (int j = 0; j < MESES; j++)
+        {
+            printf("Ingrese gasto del MES %d del TIPO %d \n", i + 1, j + 1);
+            scanf("%d", &matriz[i][j]);
+        }
+    }
+}
+void calcularTotalTipo()
+{
+    for (int i = 0; i < MESES; i++)
+    {
+        v_total[0] += matriz[0][i];
+        v_total[1] += matriz[1][i];
+        v_total[2] += matriz[2][i];
+        v_total[3] += matriz[3][i];
+    }
+}
+void calcularGastoTotal()
+{
+    for (int i = 0; i < TIPO; i++)
+    {
+        var_total += v_total[i];
+    }
+}
+void imprimirResultados()
+{
+    printf("El de gastos del tipo 1 es %d \n", v_total[0]);
+    printf(">>>>>>>>>>>>>>>>>>>>>>>>>>\n");
+    printf("El de gastos del tipo 2 es %d \n", v_total[1]);
+    printf("**************************\n");
+    printf("El de gastos del tipo 3 es %d \n", v_total[2]);
+    printf("<<<<<<<<<<<<<<<<<<<<<<<<<<<<\n");
+    printf("El de gastos del tipo 4 es %d \n", v_total[0]);
+    printf("_________________________\n");
+    printf("EL TOTAL ES: %d \n", var_total);
+    printf("_________________________");
 }
