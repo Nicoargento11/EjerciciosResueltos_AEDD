@@ -23,13 +23,14 @@ int longitud = sizeof(gastos) / sizeof(gastos[0][0]);
 string meses[3] = {"Enero", "Febrero", "Marzo"};
 string tipos[4] = {"Alimentos", "Salud    ", "Movilidad", "Educacion"};
 
-enum tiposGastos
+typedef enum tiposGastos
 {
     ALIMENTOS,
     SALUD,
     MOVILIDAD,
     EDUCACION,
 };
+
 
 int totalGastos[4] = {0, 0, 0, 0};
 float porcentajes[3];
