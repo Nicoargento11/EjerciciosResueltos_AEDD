@@ -36,8 +36,8 @@ int main()
     AgregarFinal(tercerNodo);
     AgregarCualquierPosicion(cuartoNodo, 1);
     AgregarInicio(quintoNodo);
-    EliminarNodoInicio();
-    EliminarNodoFinal();
+    // EliminarNodoInicio();
+    // EliminarNodoFinal();
     RecorrerNodo(primer);
 
     nodo *actual = primer;
