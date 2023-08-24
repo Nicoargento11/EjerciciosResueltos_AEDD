@@ -31,7 +31,6 @@ typedef struct nodo
 } lista;
 
 lista *listaAlumno;
-int tamaño;
 datosAlumno alumno;
 
 void generarLista();
@@ -43,6 +42,7 @@ void insertarCualquierPos(datosAlumno, int);
 void eliminarCualquierPos(int);
 void eliminarPrimer();
 
+int contarALumnos();
 void visualizarLista();
 void ingresarDatosAlumno();
 void menuPrincipal();
@@ -87,7 +87,6 @@ void insertarPrimer(datosAlumno _alumno)
         printf("La lista ya tiene elementos");
         return;
     }
-    tamaño++;
 }
 
 void insertarInicio(datosAlumno _alumno)
@@ -106,7 +105,6 @@ void insertarInicio(datosAlumno _alumno)
         primerNodo->siguiente = listaAlumno;
         listaAlumno = primerNodo;
     }
-    tamaño++;
 }
 
 void insertarCualquierPos(datosAlumno _alumno, int _pos)
@@ -116,7 +114,7 @@ void insertarCualquierPos(datosAlumno _alumno, int _pos)
     strcpy(nuevoNodo->alumno.nombre, _alumno.nombre);
     nuevoNodo->siguiente = NULL;
 
-    if (_pos > tamaño || _pos < 0)
+    if (_pos > contarALumnos() || _pos < 0)
     {
         printf("la posicion ingresada no es valida");
         return;
@@ -135,12 +133,11 @@ void insertarCualquierPos(datosAlumno _alumno, int _pos)
         nuevoNodo->siguiente = anterior->siguiente;
         anterior->siguiente = nuevoNodo;
     }
-    tamaño++;
 }
 
 void eliminarCualquierPos(int _pos)
 {
-    if (_pos > tamaño || _pos < 0)
+    if (_pos > contarALumnos() || _pos < 0)
     {
         printf("la posicion ingresada no es valida\n");
         return;
@@ -167,7 +164,6 @@ void eliminarCualquierPos(int _pos)
         anterior->siguiente = aux->siguiente;
         free(aux);
     }
-    tamaño--;
 }
 
 void eliminarPrimer()
@@ -182,14 +178,12 @@ void eliminarPrimer()
         lista *aux = listaAlumno;
         listaAlumno = listaAlumno->siguiente;
         free(aux);
-        tamaño--;
     }
 }
 
 void generarLista()
 {
     listaAlumno = NULL;
-    tamaño = 0;
 }
 
 bool listaVacia()
@@ -223,7 +217,7 @@ void visualizarLista()
             printf("\n");
             i = i->siguiente;
         }
-        printf("TAMAÑO: %d", tamaño);
+        printf("TAMAÑO: %d", contarALumnos());
     }
 }
 
@@ -253,13 +247,11 @@ void menuPrincipal()
                 break;
             case 2:
                 eliminarPrimer();
-                printf("Ingresa la posicion a eliminar: ");
-                scanf("%d", &pos);
-                insertarCualquierPos(alumno, pos);
                 break;
             case 3:
                 printf("Ingresa la posicion a insertar: ");
                 scanf("%d", &pos);
+                ingresarDatosAlumno();
                 insertarCualquierPos(alumno, pos);
                 break;
             case 4:
@@ -288,4 +280,16 @@ void ingresarDatosAlumno()
     printf("Ingresa el nombre del alumno: ");
     scanf("%[^\n]s", &alumno.nombre);
     fflush(stdin);
+}
+int contarALumnos()
+{
+    int contador = 0;
+    lista *primerNodo = listaAlumno;
+
+    while (primerNodo != NULL)
+    {
+        primerNodo = primerNodo->siguiente;
+        contador++;
+    }
+    return contador;
 }
