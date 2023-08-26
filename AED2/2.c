@@ -1,3 +1,7 @@
+// Nombre: Nicolas Valdes
+// DNI: 45248190
+// Comision: 3
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -26,15 +30,16 @@ tProducto productoNuevo;
 int tamaño;
 
 void inicializarNodo();
-void interfaz();
 void agregarNodo(tProducto);
 void eliminarPrimerNodo();
 void agregarCualquierPos(tProducto, int);
 void eliminarCualquierPos(int);
 void recorrerNodo(lista *);
-void ingresarProducto();
 void vaciarMemoria();
 bool listaVacia();
+
+void ingresarProducto();
+void interfaz();
 
 int main()
 {
