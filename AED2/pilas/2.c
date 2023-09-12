@@ -208,7 +208,6 @@ void visualizarPila()
             printf("\n");
             i = i->siguiente;
         }
-        // printf("TAMAÑO: %d", contarALumnos());
     }
 }
 
