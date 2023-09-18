@@ -1,8 +1,6 @@
 #include <stdio.h>
 
 int a = 0;
-int total = 0;
-
 int sumarNaturales(int _a)
 {
     if (_a <= 0)

@@ -1,7 +1,6 @@
 #include <stdio.h>
 
 int a = 0;
-int total = 0;
 
 int fibonacci(int _a)
 {

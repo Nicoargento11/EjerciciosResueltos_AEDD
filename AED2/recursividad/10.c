@@ -2,7 +2,6 @@
 #include <string.h>
 typedef char string[];
 string palabra = "reconocer";
-int total = 0;
 
 int funcionPalindroma(int _inicio, int _fin, string _palabra)
 {

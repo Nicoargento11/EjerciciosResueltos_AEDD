@@ -2,7 +2,6 @@
 
 int b = 0;
 int a = 0;
-int total = 0;
 
 int calcularExponente(int _a, int _b)
 {
