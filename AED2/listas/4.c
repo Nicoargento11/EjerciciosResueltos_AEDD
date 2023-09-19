@@ -249,20 +249,29 @@ void eliminarNodo()
     }
     else
     {
-        // utilizamos un aux para llegar al anteultimo nodo, si llegamos al ultimo no lo podemos eliminar porque no podemos cambiar la direccion del anterior
         lista *aux = listaPersonas;
-        while (aux->siguiente->siguiente != NULL)
+        if (aux->siguiente == NULL)
         {
-            aux = aux->siguiente;
+            inicializarLista();
+            free(aux);
         }
-        // estamos en el anterior
-        // su siguiente es el ultimo
-        // guardamos el ultimo para despues eliminarlo
-        lista *nodoAEliminar = aux->siguiente;
-        // sacamos al ultimo de la lista
-        aux->siguiente = NULL;
-        // lo eliminamos
-        free(nodoAEliminar);
+        else
+        {
+
+            while (aux->siguiente->siguiente != NULL)
+            {
+                aux = aux->siguiente;
+            }
+            // utilizamos un aux para llegar al anteultimo nodo, si llegamos al ultimo no lo podemos eliminar porque no podemos cambiar la direccion del anterior
+            // estamos en el anterior
+            // su siguiente es el ultimo
+            // guardamos el ultimo para despues eliminarlo
+            lista *nodoAEliminar = aux->siguiente;
+            // sacamos al ultimo de la lista
+            aux->siguiente = NULL;
+            // lo eliminamos
+            free(nodoAEliminar);
+        }
     }
 }
 
@@ -289,8 +298,8 @@ void eliminarK(int _pos)
     }
     else
     {
-        // nos posicionamos en el anterior de K
         lista *anterior = listaPersonas;
+        // nos posicionamos en el anterior de K
         for (int i = 0; i < _pos - 1; i++)
         {
             anterior = anterior->siguiente;

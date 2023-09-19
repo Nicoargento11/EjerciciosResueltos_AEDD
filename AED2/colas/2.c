@@ -178,8 +178,8 @@ void push(datosLlamados _llamado)
 
     if (!colaVacia())
     {
-        nuevoNodo->siguiente = colaLlamadas.primero;
-        colaLlamadas.primero = nuevoNodo;
+        colaLlamadas.ultimo->siguiente = nuevoNodo;
+        colaLlamadas.ultimo = nuevoNodo;
     }
     else
     {

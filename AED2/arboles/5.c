@@ -19,11 +19,6 @@ void insertarElemento(tarbol **, int);
 void visualizarPreOrder(tarbol *);
 void visualizarPostOrder(tarbol *);
 void visualizarInOrder(tarbol *);
-int cantidadNodos(tarbol *);
-bool buscarElemento(tarbol *, int);
-
-void eliminarElemento(tarbol **, int);
-tarbol *buscarMin(tarbol *);
 
 void ingresarDatos();
 int main()
@@ -133,96 +128,6 @@ void visualizarPostOrder(tarbol *pArbol)
         visualizarPostOrder(pArbol->derecha);
         // raiz
         printf("%d  ", pArbol->numero);
-    }
-}
-
-int cantidadNodos(tarbol *pArbol)
-{
-    if (!arbolVacio(pArbol))
-    {
-        // sumo 1 x cada nodo distinto de vacio
-        return 1 + cantidadNodos(pArbol->derecha) + cantidadNodos(pArbol->izquierda);
-    }
-    else
-    {
-        // no sumo nada si esta vacio
-        return 0;
-    }
-}
-
-bool buscarElemento(tarbol *pArbol, int pNumero)
-{
-    if (arbolVacio(pArbol))
-    {
-        return false;
-    }
-    // si el dato a buscar es menor al nodo comparado --> derecha
-    else if (pNumero < pArbol->numero)
-    {
-        buscarElemento(pArbol->izquierda, pNumero);
-    }
-    // sino si el dato a buscar es mayor al nodo comparado --> izquierda
-    else if (pNumero > pArbol->numero)
-    {
-        buscarElemento(pArbol->derecha, pNumero);
-    }
-    else
-    {
-        return true;
-    }
-}
-
-void eliminarElemento(tarbol **pArbol, int pCodigo)
-{
-    tarbol *aux;
-    if (arbolVacio(*pArbol))
-    {
-        printf("No existe el elemento a eliminar\n");
-    }
-    else if (pCodigo < (*pArbol)->numero)
-    {
-        eliminarElemento(&(*pArbol)->izquierda, pCodigo);
-    }
-    else if (pCodigo > (*pArbol)->numero)
-    {
-        eliminarElemento(&(*pArbol)->derecha, pCodigo);
-    }
-    else
-    {
-        if ((*pArbol)->derecha == NULL)
-        {
-            aux = *pArbol;
-            *pArbol = (*pArbol)->izquierda;
-            free(aux);
-        }
-        else if ((*pArbol)->izquierda == NULL)
-        {
-            aux = *pArbol;
-            *pArbol = (*pArbol)->derecha;
-            free(aux);
-        }
-        else
-        {
-            aux = buscarMin((*pArbol)->derecha);
-            (*pArbol)->numero = aux->numero;
-            eliminarElemento(&((*pArbol)->derecha), (*pArbol)->numero);
-        }
-    }
-}
-
-tarbol *buscarMin(tarbol *pArbol)
-{
-    if (arbolVacio(pArbol))
-    {
-        return NULL;
-    }
-    else if (!arbolVacio(pArbol->izquierda))
-    {
-        return buscarMin(pArbol->izquierda);
-    }
-    else
-    {
-        return pArbol;
     }
 }
 
