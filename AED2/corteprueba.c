@@ -18,7 +18,7 @@ int revistasSinStock;
 struct
 {
     int tipo;
-    int cantidad
+    int cantidad;
 } cantRevistaMayor;
 
 int tiposRevistas[5] = {"informatica", "comics", "educativa", "Arquitectura", "biologia"};
@@ -45,6 +45,7 @@ void inicializacion()
 
 void procesoCorte()
 {
+
     while (!feof(archivo))
     {
         // inicioCorte();
@@ -68,9 +69,9 @@ void procesoCorte()
         if (revistasConStock > cantRevistaMayor.cantidad)
         {
             cantRevistaMayor.cantidad = revistasConStock;
-            cantRevistaMayor.tipo = revista.codTipo;
+            cantRevistaMayor.tipo = revistaAnterior.codTipo;
         }
-        printf("%s | %d revistas | %d revistas", tiposRevistas[revista.codTipo - 1], revistasConStock, revistasSinStock);
+        printf("%s | %d revistas | %d revistas", tiposRevistas[revistaAnterior.codTipo - 1], revistasConStock, revistasSinStock);
         revistaAnterior = revista;
     }
 }
