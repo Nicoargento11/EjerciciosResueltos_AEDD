@@ -1,3 +1,5 @@
+// archivo que manejan la logica del tetris
+
 #ifndef TETRIS_H
 #define TETRIS_H
 
@@ -8,8 +10,10 @@
 #include <stdbool.h>
 #include <stdlib.h>
 
+// codigo ASCII
 #define ESC 27
 
+// velocidad del juego
 #define INTERVALO_MOVIMIENTO 500
 
 // Caracteres escenario:
@@ -27,8 +31,7 @@
 #define FICHA_SIZE 4
 #define PIEZA 219
 
-#define MAX_PUNTUACION 1000
-
+// DEFINICION DE ESTRUCTURAS
 typedef struct
 {
     int x, y;
@@ -49,30 +52,33 @@ typedef struct
 
 typedef tDatoTablero tTablero[TABLERO_LARGO][TABLERO_ANCHO];
 
+// DEFINICION DE PROTOTIPOS
+
 void inicializarTablero();
 void imprimirEscenario();
 void gotoxy(int x, int y);
+coord funcionCoordenadas(tPieza *pPieza, int n);
 
 void piezaNueva(tPieza *pPieza, int *pColors);
 void pintarPieza(tPieza *pPieza);
 void pintarCuadrado(int x, int y);
 
 bool colision(tPieza *);
-int calcularPuntuacion();
-int tableroContarLineas();
 void colocarPieza();
-
-coord funcionCoordenadas(tPieza *pPieza, int n);
-
+int tableroContarLineas();
 bool tableroFilaLLena(int pFila);
 void tableroColapsa(int pFila);
+int calcularPuntuacion();
+
 void rotarPieza();
 coord rotarDerecha(coord);
 
+// variables del main
 extern tTablero tablero;
 extern tPieza pieza;
 extern int resultado;
 
+// permite posicionarse en cualquier parte de la consola
 void gotoxy(int x, int y)
 {
     printf("%c[%d;%dH", ESC, y, x);
@@ -95,35 +101,44 @@ void imprimirEscenario()
 {
     char c;
     int i;
+    // recorrido del tablero (matriz)
     for (i = 1; i <= TABLERO_LARGO + 2; i++)
     {
         int j;
         for (j = 1; j <= TABLERO_ANCHO + 2; j++)
         {
+            // posicionar
             gotoxy(MARGEN_H + j, MARGEN_V + i);
 
             switch (i)
             {
             case 1:
-                /* code */
+                // fila superior
                 c = j == 1 ? ESQ_SI : j == TABLERO_ANCHO + 2 ? ESQ_SD
                                                              : LINEA_H;
                 break;
             case TABLERO_LARGO + 2:
+                // fila inferior
                 c = j == 1 ? ESQ_II : j == TABLERO_ANCHO + 2 ? ESQ_ID
                                                              : LINEA_H;
                 break;
             default:
+                // filas del medio (tablero  y bordes)
                 c = j == 1 || j == TABLERO_ANCHO + 2 ? LINEA_V : tablero[i - 2][j - 2].coord == 1 ? PIEZA
                                                                                                   : ' ';
                 break;
             }
+            // posicion del tablero ocupado
             if (tablero[i - 2][j - 2].coord == 1)
             {
+                // elegir  su color
                 printf("\033[0;%dm", tablero[i - 2][j - 2].color);
             }
+            // pintar
             printf("%c", c);
+            // volver al color original
             printf("\033[0m");
+            // mover hacia abajo
             if (j == TABLERO_ANCHO + 2)
             {
                 gotoxy(MARGEN_H, MARGEN_V + i);
@@ -134,6 +149,7 @@ void imprimirEscenario()
 
 void piezaNueva(tPieza *pPieza, int *pColors)
 {
+    // distintas piezas
     coord periferias[7][3] = {{{1, 0}, {0, 1}, {1, 1}},   // cuadrado
                               {{1, 0}, {-1, 1}, {0, 1}},  // ese
                               {{0, 1}, {1, 1}, {-1, 0}},  // zeta
@@ -141,12 +157,14 @@ void piezaNueva(tPieza *pPieza, int *pColors)
                               {{0, 1}, {0, -1}, {-1, 1}}, // jota
                               {{0, 1}, {0, -1}, {0, 2}},  // palo
                               {{-1, 0}, {1, 0}, {0, 1}}}; // te
-
+    // elegir al azar
     int randomIndex = rand() % 7;
+    // posicionar la pieza fija arriba en el medio
     pPieza->piezaFija.x = 6;
     pPieza->piezaFija.y = 1;
 
     int i;
+    // posiconar sus piezas movibles con ella
     for (i = 0; i < 3; i++)
     {
         pPieza->movibles[i] = periferias[randomIndex][i];
@@ -156,18 +174,13 @@ void piezaNueva(tPieza *pPieza, int *pColors)
 
 void pintarPieza(tPieza *pPieza)
 {
-    // if (posiciones[i].y > 0 && posiciones[i].y <= TABLERO_LARGO + 1 &&
-    // posiciones[i].x >= 0 && posiciones[i].x <= TABLERO_ANCHO)
-
+    // pintar la fija
     pintarCuadrado(pPieza->piezaFija.x, pPieza->piezaFija.y);
-    // gotoxy(30, 15);
-    // printf("x: %d y: %d\n", pPieza->piezaFija.x, pPieza->piezaFija.y);
     int i;
+    // pintar las movibles
     for (i = 0; i < 3; i++)
     {
-        gotoxy(30, 20 + 1 + i * 2);
-
-        // printf("x: %d y: %d", pPieza->piezaFija.x + pPieza->movibles[i].x, pPieza->piezaFija.y + pPieza->movibles[i].y);
+        // piezas movibles se acomodan en base a la fija
         pintarCuadrado(pPieza->piezaFija.x + pPieza->movibles[i].x, pPieza->piezaFija.y + pPieza->movibles[i].y);
     }
 }
@@ -175,7 +188,9 @@ void pintarPieza(tPieza *pPieza)
 void pintarCuadrado(int x, int y)
 {
     char c = PIEZA;
+    // preveer los bordes (MARGEN_H + 2)
     gotoxy(MARGEN_H + 2 + x, y + MARGEN_V + 2);
+    // colores
     printf("\033[0;%dm", pieza.color);
     printf("%c", c);
     printf("\033[0m");
@@ -186,9 +201,9 @@ bool colision(tPieza *pieza)
     int i;
     for (i = 0; i < 4; i++)
     {
+        // obtener la coordenada de una pieza
         coord c = funcionCoordenadas(pieza, i);
-        // gotoxy(30, 19 + i);
-        // printf("y: %d x: %d\n", c.y, c.x);
+        // verificar que no colosione con bordes/piezas
         if (c.x < 0 || c.x >= TABLERO_ANCHO)
         {
             return true;
@@ -199,21 +214,21 @@ bool colision(tPieza *pieza)
         }
         if (tablero[c.y][c.x].coord != 0)
         {
-            // gotoxy(30, 19);
-            // printf("y: %d x: %d\n", c.y, c.x);
             return true;
         }
-        // arreglar
     }
     return false;
 }
 
 coord funcionCoordenadas(tPieza *pPieza, int n)
 {
+    // caso pieza fija
     coord eje = {pPieza->piezaFija.x,
                  pPieza->piezaFija.y};
+
     if (n != 0)
     {
+        // caso piezas movibles
         eje.x += pPieza->movibles[n - 1].x;
         eje.y += pPieza->movibles[n - 1].y;
     }
@@ -225,11 +240,10 @@ void colocarPieza()
     int i;
     for (i = 0; i < 4; i++)
     {
+        // obtener la coordenada de una pieza
         coord c = funcionCoordenadas(&pieza, i);
 
-        // Marcar la posición actual de la ficha en el tablero
-        // gotoxy(30, 20 + i * 2);
-        // printf("x: %d\n", c.x);
+        // Marcar la posición actual de la pieza en el tablero
         tablero[c.y][c.x].coord = 1;
         tablero[c.y][c.x].color = pieza.color;
     }
@@ -237,16 +251,10 @@ void colocarPieza()
 
 int calcularPuntuacion()
 {
-
-    // Actualizar la puntuación y asegurarse de que no supere el límite máximo
+    // acumular todas las lineas colapsadas (suma puntos)
     resultado += tableroContarLineas();
-    // if (result > MAX_PUNTUACION)
-    // {
-    //     result = MAX_PUNTUACION;
-    // }
-    return resultado;
 
-    // Imprimir el contador en una posición específica
+    return resultado;
 }
 
 int tableroContarLineas()
@@ -254,23 +262,31 @@ int tableroContarLineas()
     int fila = TABLERO_LARGO;
     int count = 0;
 
+    // recorrido de filas abajo-arriba
     while (fila >= 0)
     {
+        // la fila esta llena
         if (tableroFilaLLena(fila))
         {
+            // quitar la fila
             tableroColapsa(fila);
+            // sumar para la puntuacion
             count++;
         }
+        // no esta  llena
         else
         {
+            // ir a la siguiente fila
             fila--;
         }
     }
+    // multiplicar todas las filas colapsadas encontradas
     return count * 100;
 }
 
 void tableroColapsa(int pFila)
 {
+    // mover todas las filas para abajo
     int i;
     for (i = pFila; i > 0; i--)
     {
@@ -281,6 +297,7 @@ void tableroColapsa(int pFila)
         }
     }
     int j;
+    // igualar la primera fila en 0
     for (j = 0; j < TABLERO_ANCHO; j++)
     {
         tablero[0][j].coord = 0;
@@ -290,10 +307,9 @@ void tableroColapsa(int pFila)
 bool tableroFilaLLena(int pFila)
 {
     int i;
+    // verificar que toda la fila este llena
     for (i = 0; i < TABLERO_ANCHO; i++)
     {
-        // gotoxy(50 + i, 50);
-        // printf("%d", tablero[pFila][i].coord);
         if (tablero[pFila][i].coord == 0)
         {
             return false;
@@ -305,14 +321,23 @@ bool tableroFilaLLena(int pFila)
 
 void rotarPieza()
 {
+    tPieza piezaAnterior = pieza;
     int i;
+    // rotar las 4 piezas
     for (i = 0; i < 3; i++)
     {
         pieza.movibles[i] = rotarDerecha(pieza.movibles[i]);
     }
+    // esa rotacion no es valida
+    if (colision(&pieza))
+    {
+        // la dejamos como estaba
+        pieza = piezaAnterior;
+    }
 }
 coord rotarDerecha(coord pPieza)
 {
+
     coord piezaRotada = {pPieza.y,
                          -pPieza.x};
 
